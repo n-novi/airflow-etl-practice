@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+
+# Airflow
+airflow.db
+logs/
+
+# Docker
+*.pid
+*.log
+.env
