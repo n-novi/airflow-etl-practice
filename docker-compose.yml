@@ -8,10 +8,24 @@ services:
     ports:
       - "5432:5432"
 
-  airflow-webserver:
+  airflow-init:
     build: .
     depends_on:
       - postgres
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+    volumes:
+      - ${PWD}/dags:/opt/airflow/dags
+      - ${PWD}/data:/opt/airflow/data
+      - ./docker/airflow-init.sh:/init.sh
+    entrypoint: bash
+    command: /init.sh
+
+  airflow-webserver:
+    build: .
+    depends_on:
+      - airflow-init
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
@@ -26,7 +40,7 @@ services:
   airflow-scheduler:
     build: .
     depends_on:
-      - postgres
+      - airflow-init
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
