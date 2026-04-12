@@ -53,7 +53,6 @@ admin
 dags/ - DAG файлы Airflow (ETL логика)  
 data/ - входные и выходные данные  
 plugins/ - дополнительные плагины  
-docker/ - скрипты и инициализация  
 Dockerfile - сборка образа Airflow  
 docker-compose.yml - настройка контейнеров  
 requirements.txt - зависимости Python  
