@@ -21,7 +21,7 @@ services:
       - "8080:8080"
     volumes:
       - ./dags:/opt/airflow/dags
-      - airflow_data:/opt/airflow/data
+      - ./data:/opt/airflow/data
     command: bash -c "
       airflow db migrate &&
       airflow users create
@@ -43,8 +43,5 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
     volumes:
       - ./dags:/opt/airflow/dags
-      - airflow_data:/opt/airflow/data
+      - ./data:/opt/airflow/data
     command: airflow scheduler
-
-volumes:
-  airflow_data:
