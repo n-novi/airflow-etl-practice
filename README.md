@@ -16,7 +16,7 @@
 Склонируйте репозиторий:
 
 ```bash
-git clone git@github.com:n-novi/airflow-etl-practice.git
+git clone https://github.com/n-novi/airflow-etl-practice.git
 cd airflow-etl-practice
 ```
 
