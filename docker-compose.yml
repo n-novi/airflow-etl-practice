@@ -10,6 +10,7 @@ services:
 
   airflow-webserver:
     build: .
+    user: "50000:0"
     depends_on:
       - postgres
     environment:
@@ -19,8 +20,8 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ${PWD}/dags:/opt/airflow/dags
-      - ${PWD}/data:/opt/airflow/data
+      - ./dags:/opt/airflow/dags
+      - ./data:/opt/airflow/data
     command: bash -c "
       airflow db migrate &&
       airflow users create
@@ -34,12 +35,13 @@ services:
 
   airflow-scheduler:
     build: .
+    user: "50000:0"
     depends_on:
       - postgres
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
     volumes:
-      - ${PWD}/dags:/opt/airflow/dags
-      - ${PWD}/data:/opt/airflow/data
+      - ./dags:/opt/airflow/dags
+      - ./data:/opt/airflow/data
     command: airflow scheduler
