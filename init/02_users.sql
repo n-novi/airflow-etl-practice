@@ -1,0 +1,2 @@
+CREATE USER airflow WITH PASSWORD 'airflow';
+CREATE USER admin WITH PASSWORD 'admin';
